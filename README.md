@@ -1,11 +1,19 @@
 # Avatar Studio — standalone 3D avatar test app
 
 A self-contained Vite + TypeScript + three.js application that loads the local
-`anux ai 3d model.glb` VRM-style avatar, retargets Mixamo FBX animation clips
+`anux ai 3d model.glb` VRM-style avatar, retargets 8 Mixamo FBX animation clips
 onto its `J_Bip_*` skeleton at runtime, and plays them with crossfades, facial
 expressions, and a developer animation test panel.
 
 This is a **standalone test harness** — no ANUX integration.
+
+## Screenshots
+
+| Idle — portrait camera | Idle — natural gaze / looking around |
+| --- | --- |
+| ![Idle portrait](docs/screenshots/idle-portrait.png) | ![Idle looking away](docs/screenshots/idle-look-away.png) |
+
+![Dance — automatic full-body camera while music dance is active](docs/screenshots/dance-full-body.png)
 
 ## Run it
 
