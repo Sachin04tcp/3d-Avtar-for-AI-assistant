@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avatar Studio</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧍</text></svg>"
+    />
+  </head>
+  <body>
+    <div id="stage"></div>
+    <div id="vignette"></div>
+
+    <aside id="panel" class="panel">
+      <header class="panel-head">
+        <div class="panel-titles">
+          <h1>Avatar Studio</h1>
+          <p id="model-subtitle">loading…</p>
+        </div>
+        <button id="panel-collapse" class="icon-btn" title="Hide panel (H)">✕</button>
+      </header>
+
+      <div class="panel-body" id="panel-body">
+        <h2>State</h2>
+        <div class="btn-row wrap" id="state-buttons">
+          <button class="mini-btn" data-state="IDLE">Idle</button>
+          <button class="mini-btn" data-state="GREETING">Greeting</button>
+          <button class="mini-btn" data-state="HAPPY">Happy</button>
+          <button class="mini-btn" data-state="SAD">Sad</button>
+          <button class="mini-btn" data-state="ANGRY">Angry</button>
+          <button class="mini-btn" data-state="SURPRISED">Surprised</button>
+          <button class="mini-btn" data-state="THINKING">Thinking</button>
+          <button class="mini-btn" data-state="DANCE">Dance</button>
+        </div>
+
+        <h2>Music (test)</h2>
+        <p class="now-playing">Music: <span id="music-state">OFF</span> <span id="music-src" class="dim"></span></p>
+        <div class="btn-row">
+          <button id="btn-music-on" class="mini-btn">Music ON</button>
+          <button id="btn-music-off" class="mini-btn">Music OFF</button>
+        </div>
+        <div class="btn-row">
+          <button id="btn-music-analysis" class="mini-btn">Analysis test</button>
+          <button id="btn-music-stop-test" class="mini-btn">Stop test audio</button>
+        </div>
+
+        <h2>Speaking (test)</h2>
+        <p class="now-playing">Speaking: <span id="speak-state">OFF</span></p>
+        <div class="btn-row">
+          <button id="btn-speak" class="mini-btn">Speak</button>
+          <button id="btn-speak-stop" class="mini-btn">Stop</button>
+        </div>
+        <div class="btn-row">
+          <button id="btn-speak-fast" class="mini-btn">Fast</button>
+          <button id="btn-speak-slow" class="mini-btn">Slow</button>
+          <button id="btn-speak-audio" class="mini-btn">Audio fallback</button>
+        </div>
+        <dl id="speak-debug" class="info speak-debug">
+          <dt>Viseme</dt><dd id="speak-viseme">—</dd>
+          <dt>Intensity</dt><dd id="speak-intensity">—</dd>
+          <dt>Mouth</dt><dd id="speak-openness">—</dd>
+        </dl>
+
+        <h2>Emotions</h2>
+        <div id="emotion-list" class="chip-list"></div>
+
+        <h2>Animations</h2>
+        <div id="anim-list" class="anim-list"></div>
+
+        <h2>Playback</h2>
+        <p class="now-playing">Now playing: <span id="now-playing">—</span></p>
+        <div class="btn-row">
+          <button id="btn-play" class="mini-btn">Play</button>
+          <button id="btn-stop" class="mini-btn">Stop</button>
+          <button id="btn-reset" class="mini-btn">Reset</button>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">Loop</span>
+          <select id="loop-mode" class="select">
+            <option value="default">Default (registry)</option>
+            <option value="loop">Loop</option>
+            <option value="once">Once</option>
+          </select>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" id="btn-pause" /> Pause</label>
+          <button id="btn-idle" class="mini-btn">Back to idle</button>
+        </div>
+        <div class="slider-row">
+          <span class="slider-label">Speed</span>
+          <input type="range" id="speed" min="0.25" max="2" step="0.05" value="1" />
+          <span id="speed-val" class="slider-value">1.00×</span>
+        </div>
+
+        <h2>Camera</h2>
+        <div class="btn-row" id="camera-modes">
+          <button class="mini-btn" data-cam="normal">Normal</button>
+          <button class="mini-btn" data-cam="full-body">Full Body</button>
+          <button class="mini-btn" data-cam="auto">Auto</button>
+        </div>
+
+        <h2>Behavior</h2>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="bhv-idle" checked /> Idle life</label>
+          <label class="check"><input type="checkbox" id="bhv-blink" checked /> Auto blink</label>
+          <label class="check"><input type="checkbox" id="bhv-eyes" checked> Eye movement</label>
+          <label class="check"><input type="checkbox" id="bhv-head" checked> Head movement</label>
+        </div>
+
+        <h2>View</h2>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="chk-skeleton" /> Skeleton</label>
+          <label class="check"><input type="checkbox" id="chk-wireframe" /> Wireframe</label>
+          <label class="check"><input type="checkbox" id="chk-grid" checked /> Grid</label>
+          <label class="check"><input type="checkbox" id="chk-orbit" /> Auto-orbit</label>
+        </div>
+
+        <h2>Info</h2>
+        <dl id="info" class="info"></dl>
+      </div>
+    </aside>
+
+    <button id="panel-show" class="mini-btn panel-show hidden" title="Show panel (H)">☰ Panel</button>
+
+    <div id="hint" class="hint">drag · orbit&nbsp;&nbsp;&nbsp;wheel · zoom&nbsp;&nbsp;&nbsp;1–8 · clips&nbsp;&nbsp;&nbsp;G · greet&nbsp;&nbsp;&nbsp;D · dance&nbsp;&nbsp;&nbsp;space · pause&nbsp;&nbsp;&nbsp;H · panel</div>
+
+    <div id="loading" class="loading">
+      <div class="loading-card">
+        <div class="spinner"></div>
+        <p id="loading-label">Loading…</p>
+        <div class="bar"><div id="loading-bar" class="bar-fill"></div></div>
+      </div>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
